@@ -19,16 +19,5 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public userData: UserData) { }
 
-  onLogin(form: NgForm) {
-    this.submitted = true;
-
-    if (form.valid) {
-      this.userData.login(this.login.username);
-      this.navCtrl.push(TabsPage);
-    }
-  }
-
-  onSignup() {
-    this.navCtrl.push(SignupPage);
-  }
+ 
 }
