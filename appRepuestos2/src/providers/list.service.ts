@@ -36,6 +36,20 @@ export class ListService {
         }
      }
 
+     GetListSinCache(){
+        let url = `${this.url}/listkit`;
+        //let token = localStorage.getItem("auth_token");
+        return this.http
+            .get(url)
+            .map(r=>r.json())
+            .map((res) => {
+                this.data = res;
+                //console.log(res);
+                return res;
+            })
+            .catch(this.handleError);
+     }
+
      private handleError (error: Response | any) {
         //console.log("entro al error");
         // In a real world app, we might use a remote logging infrastructure

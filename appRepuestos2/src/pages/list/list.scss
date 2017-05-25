@@ -1,3 +1,14 @@
 page-list {
-  
+  ion-badge {
+    left: -12px;
+    top: -4px;
+    position: absolute;
+  }
+  ion-fab[top][pegado] {
+      top: 19px;
+      right: 2px;
+  }
+  .item-md [item-left], .item-md [item-right], .item-md [item-start], .item-md [item-end] {
+      margin-right: 30px;
+  }
 }

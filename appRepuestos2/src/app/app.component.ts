@@ -32,12 +32,12 @@ export class MyApp {
   rootPage: any = LoginPage;
 
   pages: PageInterface[] = [
-      { title: 'Home', name: 'HomePage', component: HomePage, icon: 'log-in' },
-      { title: 'List', name: 'ListPage', component: ListPage, icon: 'log-in' }
+      { title: 'Inicio', name: 'HomePage', component: HomePage, icon: 'log-in' },
+      { title: 'Repuestos', name: 'ListPage', component: ListPage, icon: 'log-in' }
   ];
 
   loggedOutPages: PageInterface[] = [
-      { title: 'Login', name: 'LoginPage', component: LoginPage, icon: 'log-in' }
+      { title: 'Iniciar Sesion', name: 'LoginPage', component: LoginPage, icon: 'log-in' }
   ];
 
   constructor(

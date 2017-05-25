@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">Cancelar</button>
+      <button ion-button icon-only (click)="dismiss()"><ion-icon ios="ios-close" md="md-close"></ion-icon></button>
     </ion-buttons>
 
     <ion-title>
@@ -9,7 +9,7 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button (click)="applyFilters()" strong>Finalizar</button>
+      <button ion-button icon-only (click)="applyFilters()" strong><ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon></button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -21,7 +21,11 @@
 
     <ion-item *ngFor="let track of tracks" [attr.track]="track.name | lowercase">
       <span item-start class="dot"></span>
-      <ion-label>{{track.name}}</ion-label>
+      <ion-label>
+        <h2>{{track.name}}</h2>
+        <h3>{{track.sistema}}</h3>
+        <p>Cantidad: {{track.cantidad}}&nbsp;&nbsp;-&nbsp;&nbsp;Item: {{track.item}}</p>
+      </ion-label>
       <ion-toggle [(ngModel)]="track.isChecked" color="secondary"></ion-toggle>
     </ion-item>
 
@@ -29,7 +33,7 @@
 
   <ion-list>
     <button ion-item (click)="resetFilters()" detail-none class="reset-filters">
-      Reset All Filters
+      Restablecer todos los filtros
     </button>
   </ion-list>
 

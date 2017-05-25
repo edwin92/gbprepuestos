@@ -70,7 +70,6 @@ export class SchedulePage {
         this.updateSchedule();
       }
     });
-
   }
 
   goToSessionDetail(sessionData: any) {

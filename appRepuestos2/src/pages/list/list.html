@@ -4,27 +4,28 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-segment>
-      <ion-segment-button value="all">
-        All
+    <ion-segment [(ngModel)]="segment">
+      <ion-segment-button value="kits">
+        Kits
       </ion-segment-button>
-      <ion-segment-button value="favorites">
-        Seleccionados
+      <ion-segment-button value="explosionados">
+        Partes
       </ion-segment-button>
     </ion-segment>
 
-    <!--<ion-buttons end>
-      <button ion-button icon-only (click)="presentFilter()">
-        <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="presentCard()">
+        <ion-icon ios="ios-cart-outline" md="md-cart"></ion-icon>
+        <ion-badge item-right>{{ totalCard }}</ion-badge>
       </button>
-    </ion-buttons>-->
+    </ion-buttons>
   </ion-navbar>
 
   <ion-toolbar no-border-top>
     <ion-searchbar color="primary"
                    [(ngModel)]="queryText"
                    (ionInput)="updateSchedule()"
-                   placeholder="Search">
+                   placeholder="Buscar">
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
@@ -36,10 +37,14 @@
   <ion-list>
     <ion-item-group>
       <ion-list-header color="light">
-        Header
+        Kits
       </ion-list-header>
-      <ion-item-sliding *ngFor="let item of lista" #slidingItem+item.kit.id id="{{item.kit.id}}">
-
+      <ion-item *ngFor="let item of lista">
+        <ion-fab right top pegado *ngIf="item.mostrar">
+          <button ion-fab mini (click)="presentCard()">
+            <ion-icon ios="ios-cart" md="md-cart"></ion-icon>
+          </button>
+        </ion-fab>
         <button ion-item (click)="presentFilter(item)">
           <ion-avatar item-left>
             <img src="https://image.flaticon.com/icons/svg/145/145547.svg">
@@ -47,35 +52,12 @@
           <h3>{{item.kit.nombre}}</h3>
           <p>Descuento del 12%</p>
           <div class="item-note" item-right>
-            {{item.item.length}}/{{item.item.length}} 
+            {{item.item.length - item.descontar}}/{{item.item.length}} 
           </div>
         </button>
-
-        <ion-item-options>
-          <button ion-button color="favorite" (click)="addFavorite(slidingItem, session)" *ngIf="segment === 'all'">
-            Favorite
-          </button>
-          <button ion-button color="danger" (click)="removeFavorite(slidingItem, session, 'Remove Favorite')" *ngIf="segment === 'favorites'">
-            Remove
-          </button>
-        </ion-item-options>
-
-      </ion-item-sliding>
-
-
-      <!--<ion-item >
-        <ion-avatar item-left>
-          <img src="https://image.flaticon.com/icons/svg/145/145547.svg">
-        </ion-avatar>
-        <h2>{{item.kit.nombre}}</h2>
-        <p>Descuento del 12%</p>
-        <div class="item-note" item-right>
-          {{item.item.length}}/{{item.item.length}} 
-        </div>
-      </ion-item>-->
-
-      <ion-list-header [hidden]="shownSessions > 0">
-          No Sessions Found
+      </ion-item>
+      <ion-list-header [hidden]="lista.length > 0">
+          No se han encontrado Kits
       </ion-list-header>
     </ion-item-group>
   </ion-list>

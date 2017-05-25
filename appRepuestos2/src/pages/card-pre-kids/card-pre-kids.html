@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="dismiss()"><ion-icon ios="ios-close" md="md-close"></ion-icon></button>
+    </ion-buttons>
+
+    <ion-title>
+      Cesta de la compra
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="deleteItem()" strong><ion-icon ios="ios-trash" md="md-trash"></ion-icon></button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item-group [hidden]="ListCard.length === 0">
+      <ion-list-header color="light">
+        Mi Cesta
+      </ion-list-header>
+      <ion-item *ngFor="let item of ListCard" (click)="presentFilter(item.lista)">
+          <ion-checkbox [(ngModel)]="item.check"></ion-checkbox>
+          <ion-avatar item-left>
+            <img src="https://image.flaticon.com/icons/svg/145/145547.svg">
+          </ion-avatar>
+          <ion-label>
+            <h3>{{item.lista.kit.nombre}}</h3>
+            <p>Descuento del 12%</p>  
+          </ion-label>        
+          <div class="item-note" item-right>
+            {{item.lista.item.length - item.lista.descontar}}/{{item.lista.item.length}} 
+          </div>          
+      </ion-item>
+    </ion-item-group>
+    <ion-list-header [hidden]="ListCard.length > 0">
+        No se han encontrado Kits dentro de su cesta
+    </ion-list-header>    
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <h3>Total</h3>
+    <p>$ {{valorTotal}}</p>
+      <button ion-button color="danger" class="btn-comprar">Comprar ({{ListCard.length}})</button>
+  </ion-toolbar>
+</ion-footer>

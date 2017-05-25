@@ -1,20 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Pipe, PipeTransform } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import { ListService } from '../../providers/list.service';
 
-/**
- * Generated class for the ItemFilterPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+
 @Component({
   selector: 'page-item-filter',
   templateUrl: 'item-filter.html',
 })
 export class ItemFilterPage {
 
- tracks: Array<{name: string, isChecked: boolean}> = [];
+ tracks: Array<{name: string, sistema: string, cantidad: number, item: number, kit_id: number, isChecked: boolean}> = [];
 
   constructor(
     public confData: ListService,
@@ -23,11 +18,35 @@ export class ItemFilterPage {
   ) {
     // passed in array of track names that should be excluded (unchecked)
     let item = this.navParams.data;
-    item.item.forEach(trackName => {
-        this.tracks.push({
-          name: trackName.nombre,
-          isChecked: (item.item.indexOf(trackName.nombre) === -1)
-        });
+    let resItem: string[] = [];
+    
+    item.item.forEach( dato => {
+        //let resItem = item.datos.filter(book => {book === dato.nombre}); 
+        try{
+          resItem = item.datos.filter(book => book === dato.nombre); 
+        }catch(e){
+          console.log("error --->");
+        }
+        if (resItem.length > 0) {
+          this.tracks.push({
+            name: dato.nombre,
+            sistema: dato.sistema,
+            cantidad: dato.cantidad,
+            item: dato.item,
+            kit_id: dato.kit_id,
+            isChecked: (item.item.indexOf(dato.nombre) === 1)
+          });
+        }else{
+          this.tracks.push({
+            name: dato.nombre,
+            sistema: dato.sistema,
+            cantidad: dato.cantidad,
+            item: dato.item,
+            kit_id: dato.kit_id,
+            isChecked: (item.item.indexOf(dato.nombre) === -1)
+          });
+        }
+        
     });
   }
 
@@ -41,14 +60,10 @@ export class ItemFilterPage {
   applyFilters() {
     // Pass back a new array of track names to exclude
     let item = this.tracks.filter(c => !c.isChecked).map(c => c.name);
-    console.log("en applyFilters",item);
     this.dismiss(item);
   }
 
   dismiss(data?: any) {
-    // using the injected ViewController this page
-    // can "dismiss" itself and pass back data
-    console.log("en dimiss",data);
     this.viewCtrl.dismiss(data);
   }
 
