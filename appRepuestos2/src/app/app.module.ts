@@ -8,7 +8,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { ItemFilterPage } from '../pages/item-filter/item-filter';
-import { CardPreKidsPage } from '../pages/card-pre-kids/card-pre-kids'
+import { CardPreKidsPage } from '../pages/card-pre-kids/card-pre-kids';
 
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -17,6 +17,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { AuthService } from '../providers/auth.service';
 import { ListService } from '../providers/list.service';
 import { TemporalService } from '../providers/temporal.service';
+import { SaveService } from '../providers/save.service';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { TemporalService } from '../providers/temporal.service';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthService,
     TemporalService,
+    SaveService,
     ListService,
     SplashScreen,
     StatusBar

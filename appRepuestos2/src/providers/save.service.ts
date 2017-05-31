@@ -5,36 +5,28 @@ import { Observable } from 'rxjs/Rx';
 //import 'rxjs/add/operator/map';
 
 @Injectable()
-export class AuthService {
-   userName: string;
-   loggedIn: boolean;
+export class SaveService {
+   dato: string[];
    url = 'http://localhost/proyectosLaravel/crudRepuestos/public';
 
-   constructor(private http: Http) {
-      this.userName = '';
-      this.loggedIn = false;
-   }
+   constructor(private http: Http) {}
    
-   login(userInfo) {
-      let url = `${this.url}/login`;
-      let iJon = JSON.stringify(userInfo);
+   saveCard(ListCard: any, valorTotal: any, btnComprar: any, User: any) {
+      let url = `${this.url}/pedido/crear`;
+      let iJon = JSON.stringify({'ListCard': ListCard, 'valorTotal': valorTotal, 'btnComprar': btnComprar,'User': User});
       let headers = new Headers();
       //headers.append('Access-Control-Allow-Origin', '*');
       headers.append('Content-Type', 'application/json');
       headers.append('Accept', 'application/json');
-      return this.http.post(url, userInfo, headers)
+      return this.http.post(url, {ListCard, valorTotal, btnComprar, User}, headers)
       .map(res => res.json())
       .map(res => {
          if (res.success){
-            localStorage.setItem('user', JSON.stringify(res.user));
-            localStorage.setItem('loggedIn', 'true');
-            this.userName = userInfo.user;
-            this.loggedIn = true;
+             return res;
          } else {
-           localStorage.setItem('loggedIn', 'false');
-            this.loggedIn = false;
+             return false;
          }
-         return this.loggedIn;
+         
       })
       .catch(this.handleError);
    }
@@ -55,25 +47,4 @@ export class AuthService {
     return Observable.throw(errMsg);
   }
 
-   logout(): void {
-      localStorage.removeItem('user');
-      this.userName = '';
-      this.loggedIn = false;
-   }
-
-   isLoggedIn() {
-     let loggedIn = localStorage.getItem('loggedIn');
-     if (loggedIn === 'true') {
-       this.loggedIn = true;
-     } else {
-       this.loggedIn = false;
-     }      
-      return this.loggedIn;
-   }
-
-  GetUser(){
-    let temp = localStorage.getItem('user');
-    temp = JSON.parse(temp);
-    return temp;
-  }
 }

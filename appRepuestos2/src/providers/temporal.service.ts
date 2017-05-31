@@ -19,6 +19,11 @@ export class TemporalService {
         return this.data;
      }
 
+     DeleteCar(){
+        localStorage.removeItem('carro');
+        return true;
+     }
+
      ValorCar(){
         this.totalValor = 0;
         let valor: any = 0;

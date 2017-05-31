@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, List, Refresher, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, List, Refresher, ToastController, LoadingController } from 'ionic-angular';
 
 import { ItemFilterPage } from '../item-filter/item-filter';
 import { CardPreKidsPage } from '../card-pre-kids/card-pre-kids'
@@ -34,6 +34,7 @@ export class ListPage {
     private servicio:ListService,
     private serTemporal: TemporalService,
     public toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
     public modalCtrl: ModalController) {
     // If we navigated to this page, we will have an item available as a nav param
     this.selectedItem = navParams.get('item');
@@ -54,6 +55,14 @@ export class ListPage {
   }
 
   ngOnInit() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Por favor esperanos un poco...',
+      duration: 9000
+    });
+
+    loading.present();
+    
     let resultCart = this.serTemporal.GetCar() || [];
     try {
       this.totalCard = resultCart.length;
@@ -78,6 +87,7 @@ export class ListPage {
         }else{
           alert("Algo salio mal");
         }
+        loading.dismiss()
       },
       ()=>console.log(this.lista)
     );
@@ -178,5 +188,16 @@ export class ListPage {
       toast.present();
     }, 1000);
   }
-  //GetListSinCache
+  
+  presentLoadingDefault() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loading.present();
+
+    setTimeout(() => {
+      loading.dismiss();
+    }, 5000);
+  }
 }
